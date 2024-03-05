@@ -1,8 +1,16 @@
-"use client";
+// "use client";
 import React from "react";
 import { ContainerScroll } from "../acce/ui/container-scroll-animation";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export function HeroScrollDemo() {
+  const {userId } = auth()
+
+  if(userId) {
+    redirect('/home')
+    console.log('userId', userId)
+  }
   return (
     <div className="flex flex-col overflow-hidden">
       <ContainerScroll

@@ -1,11 +1,16 @@
+"use client"
+
+import Link from 'next/link';
+import {UserButton, useUser} from '@clerk/nextjs'
 import React from 'react';
 
 const Navbar = () => {
+  const {user, isLoaded} = useUser();
   return (
     <nav className="flex items-center justify-between border-b-2 border-gray-500 flex-wrap  bg-white py-4 lg:px-12 shadow border-solid border-t-2 ">
       <div className="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid  border-gray-300 pb-5 lg:pb-0">
         <div className="flex items-center flex-shrink-0 text-gray-800 mr-16">
-          <span className="font-semibold text-xl tracking-tight">Harmony Homes</span>
+          <span className="font-semibold text-xl tracking-tight"><Link href='/'>Harmony Homes</Link></span>
         </div>
         <div className="block lg:hidden">
           <button
@@ -21,9 +26,9 @@ const Navbar = () => {
       </div>
       <div className="hidden sm:flex md:menu md:w-full md:flex-grow lg:flex lg:items-center lg:w-auto lg:px-3 px-8">
         <div className="text-md font-bold text-blue-700 lg:flex-grow">
-          <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
+          <Link href="/home" className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
             Home
-          </a>
+          </Link>
           <a href="#responsive-header" className=" block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
             Projects
           </a>
@@ -57,12 +62,24 @@ const Navbar = () => {
           </button>
         </div>
         <div className="flex ">
-          <a href="#" className="block text-md px-4 py-2 rounded text-blue-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">
-            Login
-          </a>
-          <a href="#" className=" block text-md px-4 ml-2 py-2 rounded text-green-500 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">
-            Register
-          </a>
+        {isLoaded && user ? (
+            <>
+              <span className="block text-md px-4 py-2 rounded text-blue-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">
+                {user.fullName} {/* Display user's name */}
+              </span>
+              <UserButton afterSignOutUrl="/" />
+            </>
+          ) : (
+            <>
+              <Link href="/home" className="block text-md px-4 py-2 rounded text-blue-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">
+                Login
+              </Link>
+              <Link href="/home" className="block text-md px-4 ml-2 py-2 rounded text-green-500 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">
+                Register
+              </Link>
+            </>
+          )}
+          
         </div>
       </div>
     </nav>

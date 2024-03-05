@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { HeroScrollDemo } from './components/Land/Land'; 
 import { TypewriterEffectSmoothDemo } from './components/Land/HeroText';
 
